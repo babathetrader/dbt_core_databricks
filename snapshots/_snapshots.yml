@@ -1,0 +1,20 @@
+version: 2
+
+snapshots:
+  - name: bronze_products_snapshot
+    columns:
+      - name: id
+        data_tests:
+          - unique:
+              config:
+                where: "dbt_valid_to is null"
+      - name: category
+        data_tests:
+          - unique:
+              config:
+                warn_if: ">1"
+                error_if: ">4"
+                store_failures: true
+      - name: price
+        data_tests:
+          - assert_non_negative
